@@ -3,7 +3,7 @@
 <suite name="CC Runner Installer Tests">
     <test verbose="1" preserve-order="false" name="C:/Users/user/IdeaProjects/Installer">
         <classes>
-            <class name="tests.CCRunnerInstallerTests"/>
+            <class name="tests.RunnerInstallationTests"/>
         </classes>
     </test>
 </suite>

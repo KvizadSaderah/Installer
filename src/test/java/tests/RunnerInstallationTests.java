@@ -17,7 +17,6 @@ import pages.Jobs.GoodSync.ControlCenter;
 import pages.NewInstaller.CCinstallerPage.CCInstallerPage;
 import pages.NewInstaller.LanguageSelectionModule.LanguageSelectionModule;
 import pages.NewInstaller.ModalWnds.CCRunnerInstaller.CCRunnerInstaller;
-import pages.NewInstaller.ModalWnds.RunnerErrorsWnds.CCRunnerInstaller;
 import tests.Listeners.MyListener;
 
 import java.net.InetAddress;
@@ -25,7 +24,7 @@ import java.net.UnknownHostException;
 import java.util.Map;
 
 @Listeners({MyListener.class})
-public class CCRunnerInstallerTests extends BaseTest {
+public class RunnerInstallationTests extends BaseTest {
     private String runnerName = "test@DESKTOP-90PJ87A";
     boolean needsJobsCleanAfter = false;
     private String userName = System.getProperty("user.name");
@@ -123,7 +122,7 @@ public class CCRunnerInstallerTests extends BaseTest {
         Assert.assertTrue(installer.waitForMainWndAppear(10), "Installer main wnd is not appeared in 10 sec");
         installer.clickInstallBtn();
         CCRunnerInstaller errorModalWnd = new CCRunnerInstaller(new Screen());
-        Assert.assertTrue(errorModalWnd.isModalOpened(), "Error modal wnd is not opened");
+        Assert.assertTrue(errorModalWnd.isBadCompanyIdErrorMsgOpened(), "Error modal wnd is not opened");
     }
 
     @Test
@@ -141,7 +140,7 @@ public class CCRunnerInstallerTests extends BaseTest {
         installer.setCompanyIdFieldToValue("dddd");
         installer.clickInstallBtn();
         CCRunnerInstaller errorModalWnd = new CCRunnerInstaller(new Screen());
-        Assert.assertTrue(errorModalWnd.isModalOpened(), "Error modal wnd is not opened");
+        Assert.assertTrue(errorModalWnd.isBadCompanyIdErrorMsgOpened(), "Error modal wnd is not opened");
     }
 
     @Test
@@ -337,7 +336,7 @@ public class CCRunnerInstallerTests extends BaseTest {
         needsJobsCleanAfter = false;
         new GoodSyncHelper().buildRunnerCMD().setCCRunner("user").setCCCoid("").setSilent().executeCMD();
         CCRunnerInstaller installer = new CCRunnerInstaller(new Screen());
-        Assert.assertTrue(installer.waitForCompanyIdParamErrorModalAppears(10),
+        Assert.assertTrue(installer.waitForCompanyIdFormatErrorMsgAppears(10),
                 "Modal with error company id param error didn't appear or not found in 10 sec");
         Assert.assertTrue(SysHelper.isFolderOrFileExist("C:\\Program Files\\Siber Systems\\GoodSync"),
                 "GoodSync directory is not found at sysDisk\\Program Files\\Siber System");
@@ -355,7 +354,7 @@ public class CCRunnerInstallerTests extends BaseTest {
         needsJobsCleanAfter = false;
         new GoodSyncHelper().buildRunnerCMD().setCCRunner("user").setCCCoid("qqqq").setSilent().executeCMD();
         CCRunnerInstaller installer = new CCRunnerInstaller(new Screen());
-        Assert.assertTrue(installer.waitForCompanyIdParamErrorModalAppears(10),
+        Assert.assertTrue(installer.waitForCompanyIdFormatErrorMsgAppears(10),
                 "Modal with error company id param error didn't appear or not found in 10 sec");
         Assert.assertTrue(SysHelper.isFolderOrFileExist("C:\\Program Files\\Siber Systems\\GoodSync"),
                 "GoodSync directory is not found at sysDisk\\Program Files\\Siber System");
@@ -376,7 +375,7 @@ public class CCRunnerInstallerTests extends BaseTest {
         new GoodSyncHelper().buildRunnerCMD().setCCCoid("131").setCCRunner("service").setSysUserId("")
                 .setSysPasswd("123456").setSilent().executeCMD();
         CCRunnerInstaller installer = new CCRunnerInstaller(new Screen());
-        Assert.assertTrue(installer.waitForSysUserIdErrorWndOpened(10),
+        Assert.assertTrue(installer.waitForSysUserIdEmptyErrorAppears(10),
                 "Modal wnd with error of wrong Sys User id expected but not found in 10 sec");
         Assert.assertFalse(SysHelper.isAppStatusRunning("gs-runner.exe"),
                 "gs-runner.exe should not be in the process list due to critical installation error");
@@ -401,7 +400,7 @@ public class CCRunnerInstallerTests extends BaseTest {
         new GoodSyncHelper().buildRunnerCMD().setCCRunner("service").setCCCoid("131").setSysUserId("blabla")
                 .setSysPasswd("123456").setSilent().executeCMD();
         CCRunnerInstaller installer = new CCRunnerInstaller(new Screen());
-        Assert.assertTrue(installer.waitForSysUserIdErrorWndOpened(10),
+        Assert.assertTrue(installer.waitForIncorrectSysUserErrorAppears(10),
                 "Modal wnd with error of wrong system user id expected but not found in 10 sec");
         Assert.assertTrue(SysHelper.isFolderOrFileExist("C:\\Program Files\\Siber Systems\\GoodSync"),
                 "Folder Program Files/Siber Systems/GoodSync expected to be existent bot not found");
@@ -430,8 +429,8 @@ public class CCRunnerInstallerTests extends BaseTest {
         new GoodSyncHelper().buildRunnerCMD().setCCRunner("service").setCCCoid("131")
                 .setSysUserId("test").setSysPasswd("").setSilent().executeCMD();
         CCRunnerInstaller installer = new CCRunnerInstaller(new Screen());
-        Assert.assertTrue(installer.waitForSysUserIdErrorWndOpened(10),
-                "Modal wnd with error of wrong system user id expected but not found in 10 sec");
+        Assert.assertTrue(installer.waitForIncorrectSysPasswdErrorAppears(10),
+                "Modal wnd with error of wrong system password expected but not found in 10 sec");
         Assert.assertTrue(SysHelper.isFolderOrFileExist("C:\\Program Files\\Siber Systems\\GoodSync"),
                 "Folder Program Files/Siber Systems/GoodSync expected to be existent bot not found");
         Assert.assertFalse(SysHelper.isServiceStatusRunning("gs-runner.exe"),
@@ -459,8 +458,8 @@ public class CCRunnerInstallerTests extends BaseTest {
         new GoodSyncHelper().buildRunnerCMD().setCCRunner("service").setCCCoid("131")
                 .setSysUserId("test").setSysPasswd("1234567890").setSilent().executeCMD();
         CCRunnerInstaller installer = new CCRunnerInstaller(new Screen());
-        Assert.assertTrue(installer.waitForSysUserIdErrorWndOpened(10),
-                "Modal wnd with error of wrong system user id expected but not found in 10 sec");
+        Assert.assertTrue(installer.waitForIncorrectSysPasswdErrorAppears(10),
+                "Modal wnd with error of wrong system password expected but not found in 10 sec");
         Assert.assertTrue(SysHelper.isFolderOrFileExist("C:\\Program Files\\Siber Systems\\GoodSync"),
                 "Folder Program Files/Siber Systems/GoodSync expected to be existent bot not found");
         Assert.assertFalse(SysHelper.isServiceStatusRunning("gs-runner.exe"),
