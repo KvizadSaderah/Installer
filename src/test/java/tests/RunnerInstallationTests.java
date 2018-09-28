@@ -11,6 +11,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.sikuli.script.App;
 import org.sikuli.script.Screen;
+import org.sikuli.vnc.VNCScreen;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.Jobs.GoodSync.ControlCenter;
@@ -19,6 +20,7 @@ import pages.NewInstaller.LanguageSelectionModule.LanguageSelectionModule;
 import pages.NewInstaller.ModalWnds.CCRunnerInstaller.CCRunnerInstaller;
 import tests.Listeners.MyListener;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Map;
@@ -246,7 +248,7 @@ public class RunnerInstallationTests extends BaseTest {
             "4. Check that runner mini progress wnd appears\n")
     public void runnerCanBeInstalledFromCMDasNonService(){
         needsJobsCleanAfter = true;
-       new GoodSyncHelper().buildRunnerCMD().setCCRunner("user").setCCCoid("131").executeCMD();
+        new GoodSyncHelper().buildRunnerCMD().setCCRunner("user").setCCCoid("131").executeCMD();
         CCInstallerPage installer = new CCInstallerPage(new Screen());
         Assert.assertTrue(installer.waitForMiniProgressAppear(10),
                 "Mini progress wnd didn't appear in 10 sec after cmd command execution called");
@@ -255,23 +257,24 @@ public class RunnerInstallationTests extends BaseTest {
         cc.loginToControlCenter();
         cc.goToRunnersPage();
         cc.clickShowInactive();
-        Assert.assertFalse(cc.isRunnerAuthorized(runnerName),
+        softAssert.assertFalse(cc.isRunnerAuthorized(runnerName),
                 "runner should not be authorized on jobs.gs.com or runner is not found");
-        Assert.assertTrue(SysHelper.isAppStatusRunning("gs-runner"),
+        softAssert.assertTrue(SysHelper.isAppStatusRunning("gs-runner"),
                 "gs-runner.exe is not in running state or not found");
-        Assert.assertTrue(GsServerLogReader
+        softAssert.assertTrue(GsServerLogReader
                         .findStringInLog("Enterprise Runner: Registering New User=",
                                 "C:\\Users\\test\\AppData\\Roaming\\GoodSync",
                                 "Runner", true),
                 "The string 'Enterprise Runner: Registering New User=' not found in runner log");
         Map<String, String> registry = WinRegistryHelper.readRegValues(WinRegConst.HKLM,
                 WinRegConst.SOFTWARE_POLICIES_SIBER_GS);
-        Assert.assertEquals(registry.get("EnterpriseRunnerConfig"), "x",
+        softAssert.assertEquals(registry.get("EnterpriseRunnerConfig"), "x",
                 "EnterpriseRunnerConfig expected to be 'x' but found: " + registry.get("EnterpriseRunnerConfig"));
-        Assert.assertEquals(registry.get("JobServerUrl"), "https://jobs.goodsync.com",
+        softAssert.assertEquals(registry.get("JobServerUrl"), "https://jobs.goodsync.com",
                 "JobServerUrl key expected to be https://jobs.goodsync.com but found: " + registry.get("JobServerUrl"));
-        Assert.assertEquals(registry.get("RunnerServiceUserId"), "0x1",
+        softAssert.assertEquals(registry.get("RunnerServiceUserId"), "0x1",
                 "RunnerServiceUserId expected to be empty but found: " + registry.get("RunnerServiceUserId"));
+        softAssert.assertAll();
     }
 
     @Test
@@ -286,27 +289,28 @@ public class RunnerInstallationTests extends BaseTest {
         needsJobsCleanAfter = true;
         new GoodSyncHelper().buildRunnerCMD().setCCCoid("131").setCCRunner("service").setSysUserId("test")
                 .setSysPasswd("123456").setSilent().executeCMD();
+        // TODO wait for 10 sec must be replaced with conditional
         wait(10);
-        Assert.assertTrue(SysHelper.isAppStatusRunning("gs-runner"),
+        softAssert.assertTrue(SysHelper.isServiceStatusRunning("GsRunner " + userName),
                 "gs-runner.exe is not in running state or not found");
-        Assert.assertTrue(GsServerLogReader
+        softAssert.assertTrue(GsServerLogReader
                         .findStringInLog("Enterprise Runner: Registering New User=",
                                 "C:\\Users\\test\\AppData\\Roaming\\GoodSync",
                                 "Runner", true),
                 "The string 'Enterprise Runner: Registering New User=' not found in runner log");
         Map<String, String> registry = WinRegistryHelper.readRegValues(WinRegConst.HKLM,
                 WinRegConst.SOFTWARE_POLICIES_SIBER_GS);
-        Assert.assertEquals(registry.get("EnterpriseRunnerConfig"), "x",
+        softAssert.assertEquals(registry.get("EnterpriseRunnerConfig"), "x",
                 "EnterpriseRunnerConfig expected to be 'x' but found: " + registry.get("EnterpriseRunnerConfig"));
-        Assert.assertEquals(registry.get("RunnerServiceUserId"), "test",
+        softAssert.assertEquals(registry.get("RunnerServiceUserId"), "test",
                 "RunnerServiceUserId key expected to be test but found: " + registry.get("RunnerServiceUserId"));
-        Assert.assertEquals(registry.get("MiniProgress"), "0x0",
+        softAssert.assertEquals(registry.get("MiniProgress"), "0x0",
                 "MiniProgress key expected to be 0x0 but found: " + registry.get("MiniProgress"));
-        Assert.assertEquals(registry.get("UserClose"), "0x0",
+        softAssert.assertEquals(registry.get("UserClose"), "0x0",
                 "UserClose key expected to be 0x0 but found: " + registry.get("UserClose"));
-        Assert.assertEquals(registry.get("CompanyId"), "131",
+        softAssert.assertEquals(registry.get("CompanyId"), "131",
                 "CompanyId expected to be '131' but found: " + registry.get("CompanyId"));
-
+        softAssert.assertAll();
     }
 
     @Test
@@ -338,10 +342,11 @@ public class RunnerInstallationTests extends BaseTest {
         CCRunnerInstaller installer = new CCRunnerInstaller(new Screen());
         Assert.assertTrue(installer.waitForCompanyIdFormatErrorMsgAppears(10),
                 "Modal with error company id param error didn't appear or not found in 10 sec");
-        Assert.assertTrue(SysHelper.isFolderOrFileExist("C:\\Program Files\\Siber Systems\\GoodSync"),
+        softAssert.assertTrue(SysHelper.isFolderOrFileExist("C:\\Program Files\\Siber Systems\\GoodSync"),
                 "GoodSync directory is not found at sysDisk\\Program Files\\Siber System");
-        Assert.assertFalse(SysHelper.isServiceStatusRunning("gs-runner.exe"),
+        softAssert.assertFalse(SysHelper.isServiceStatusRunning("gs-runner.exe"),
                 "gs-runner is running but should be not cuz after companyid error it should be closed");
+        softAssert.assertAll();
     }
 
     @Test
@@ -614,7 +619,7 @@ public class RunnerInstallationTests extends BaseTest {
 
     @Test
     @Description
-    public void installRunnerAccountPwdViaGUI(){
+    public void installRunnerAccountPwdViaGUI() {
         needsJobsCleanAfter = true;
         App.open("C:\\goodsync\\" + Links.goodsync_v10_CC_Runner_setup_pvt);
         CCInstallerPage installer = new CCInstallerPage(new Screen());
@@ -629,6 +634,7 @@ public class RunnerInstallationTests extends BaseTest {
         Assert.assertTrue(!registry.get("AccountsEncryptPassword").isEmpty(),
                 "AccountsEncryptPassword registry value expected to be not empty");
     }
+
 
     @Test
     @Description

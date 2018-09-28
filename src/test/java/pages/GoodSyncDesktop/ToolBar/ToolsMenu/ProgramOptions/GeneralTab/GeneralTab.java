@@ -1,4 +1,4 @@
-package pages.GoodSyncDesktop.ProgramOptions.GeneralTab;
+package pages.GoodSyncDesktop.ToolBar.ToolsMenu.ProgramOptions.GeneralTab;
 
 import org.sikuli.script.Screen;
 

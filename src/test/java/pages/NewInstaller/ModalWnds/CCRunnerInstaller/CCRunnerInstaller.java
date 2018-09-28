@@ -1,5 +1,6 @@
 package pages.NewInstaller.ModalWnds.CCRunnerInstaller;
 
+import com.sikulix.vnc.VNCClient;
 import io.github.marcoslimaqa.sikulifactory.FindBy;
 import io.github.marcoslimaqa.sikulifactory.SikuliElement;
 import io.github.marcoslimaqa.sikulifactory.SikuliFactory;
