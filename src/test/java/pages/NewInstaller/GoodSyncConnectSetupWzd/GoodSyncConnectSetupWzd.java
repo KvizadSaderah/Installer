@@ -9,7 +9,7 @@ import org.sikuli.script.Screen;
 public class GoodSyncConnectSetupWzd {
     private Screen sikuli;
 
-    @FindBy(images = {"src/test/java/pages/NewInstaller/GoodSyncConnectSetupWzd/img/rootWnd.png",
+    @FindBy(images = {"src/test/java/pages/NewInstaller/GoodSyncConnectSetupWzd/img/firstStepWnd.png",
     "src/test/java/pages/NewInstaller/GoodSyncConnectSetupWzd/img/rootWnd1.png",
     "src/test/java/pages/NewInstaller/GoodSyncConnectSetupWzd/img/rootWndGerman.png"}, similarity = 70.0f)
     private SikuliElement rootWnd;

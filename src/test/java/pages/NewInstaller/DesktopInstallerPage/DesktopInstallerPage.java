@@ -9,7 +9,7 @@ import pages.NewInstaller.ModalWnds.RunNowDlgWnd.RunNowDlgWnd;
 public class DesktopInstallerPage {
     private Screen sikuli;
 
-    @FindBy(images = {"src/test/java/pages/NewInstaller/DesktopInstallerPage/img/rootWnd.png",
+    @FindBy(images = {"src/test/java/pages/NewInstaller/DesktopInstallerPage/img/firstStepWnd.png",
     "src/test/java/pages/NewInstaller/DesktopInstallerPage/img/rootWnd1.png"}, similarity = 70.0f)
     private SikuliElement rootWnd;
 

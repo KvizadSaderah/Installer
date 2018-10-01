@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Uninstaller {
     private Screen sikuli;
 
-    @FindBy(image = "src/test/java/pages/UnInstaller/img/rootWnd.png", similarity = 70.0f)
+    @FindBy(image = "src/test/java/pages/UnInstaller/img/firstStepWnd.png", similarity = 70.0f)
     private SikuliElement rootWnd;
 
     @FindBy(image = "src/test/java/pages/UnInstaller/img/uninstallBtn.png", similarity = 70.0f)

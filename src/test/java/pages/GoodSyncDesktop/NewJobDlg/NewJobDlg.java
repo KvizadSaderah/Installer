@@ -8,7 +8,7 @@ import org.sikuli.script.Screen;
 public class NewJobDlg {
     private Screen sikuli;
 
-    @FindBy(images = {"src/test/java/pages/GoodSyncDesktop/NewJobDlg/img/rootWnd.png",
+    @FindBy(images = {"src/test/java/pages/GoodSyncDesktop/NewJobDlg/img/firstStepWnd.png",
     "src/test/java/pages/GoodSyncDesktop/NewJobDlg/img/rootWndFirstJob.png"}, similarity = 70.0f)
     private SikuliElement rootWnd;
 
