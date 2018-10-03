@@ -8,7 +8,7 @@ import org.sikuli.script.Screen;
 public class CloseInstallerWnd {
     private Screen sikuli;
 
-    @FindBy(image = "src/test/java/pages/NewInstaller/ModalWnds/CloseInstallerWnd/img/firstStepWnd.png", similarity = 70.0f)
+    @FindBy(image = "src/test/java/pages/NewInstaller/ModalWnds/CloseInstallerWnd/img/rootWnd.png", similarity = 70.0f)
     private SikuliElement rootWnd;
 
     @FindBy(image = "src/test/java/pages/NewInstaller/ModalWnds/CloseInstallerWnd/img/yesBtn.png", similarity = 70.0f)

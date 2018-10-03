@@ -107,14 +107,16 @@ public class ServerAdvancedOptions {
         $(By.id("add_user")).find(By.tagName("a")).click();
     }
 
-    public void clickEditUser(String userId){
+    public EditUser clickEditUser(String userId){
         $(By.id("user_list")).find(By.tagName("tbody")).find(By.linkText(userId)).parent()
                 .find(By.partialLinkText("edit_user")).click();
+        return new EditUser();
     }
 
-    public void clickDeleteUser(String userId){
+    public DeleteUserConfirmation clickDeleteUser(String userId){
         $(By.id("user_list")).find(By.tagName("tbody")).find(By.linkText(userId)).parent()
                 .find(By.partialLinkText("delete_user")).click();
+        return new DeleteUserConfirmation();
     }
 
     public boolean isAccountGSConnectType(String userId){
@@ -130,6 +132,56 @@ public class ServerAdvancedOptions {
     public boolean isAdmin(String userId){
         String result = $(By.id("user_list")).find(By.tagName("tbody")).find(By.linkText(userId)).parent()
                 .find(By.xpath("/td[4]")).attr("alt");
+        if(result.contains("yes")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isMediatorOK(String userId){
+        String result = $(By.id("user_list")).find(By.tagName("tbody")).find(By.linkText(userId)).parent()
+                .find(By.xpath("/td[5]")).attr("alt");
+        if(result.contains("yes")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public String getHomeFolder(String userId){
+        return $(By.id("user_list")).find(By.tagName("tbody")).find(By.linkText(userId)).parent()
+                .find(By.xpath("/td[6]")).getText();
+    }
+
+    public boolean isImpersonate(String userId){
+        String result = $(By.id("user_list")).find(By.tagName("tbody")).find(By.linkText(userId)).parent()
+                .find(By.xpath("/td[7]")).attr("alt");
+        if(result.contains("yes")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public String getImpersonateValue(String userId){
+        return $(By.id("user_list")).find(By.tagName("tbody")).find(By.linkText(userId)).parent()
+                .find(By.xpath("/td[7]")).getText();
+    }
+
+    public boolean isReadOnly(String userId){
+        String result = $(By.id("user_list")).find(By.tagName("tbody")).find(By.linkText(userId)).parent()
+                .find(By.xpath("/td[8]")).attr("alt");
+        if(result.contains("yes")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isSysProtected(String userId){
+        String result = $(By.id("user_list")).find(By.tagName("tbody")).find(By.linkText(userId)).parent()
+                .find(By.xpath("/td[9]")).attr("alt");
         if(result.contains("yes")){
             return true;
         } else {

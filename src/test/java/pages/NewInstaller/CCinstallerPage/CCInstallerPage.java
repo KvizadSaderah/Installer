@@ -10,7 +10,7 @@ import pages.NewInstaller.ModalWnds.RunNowDlgWnd.RunNowDlgWnd;
 public class CCInstallerPage{
     private Screen sikuli;
 
-    @FindBy(image = "src/test/java/pages/NewInstaller/CCinstallerPage/img/firstStepWnd.png", similarity = 80.0f)
+    @FindBy(image = "src/test/java/pages/NewInstaller/CCinstallerPage/img/rootWnd.png", similarity = 80.0f)
     private SikuliElement rootWnd;
 
     @FindBy(image = "src/test/java/pages/NewInstaller/CCinstallerPage/img/langSelectionBtn.png", similarity = 70.0f)

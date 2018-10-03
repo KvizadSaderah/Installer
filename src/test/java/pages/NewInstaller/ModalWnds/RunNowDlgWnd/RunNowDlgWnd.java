@@ -8,7 +8,7 @@ import org.sikuli.script.Screen;
 public class RunNowDlgWnd {
     private Screen sikuli;
 
-    @FindBy(images = {"src/test/java/pages/NewInstaller/ModalWnds/RunNowDlgWnd/img/firstStepWnd.png",
+    @FindBy(images = {"src/test/java/pages/NewInstaller/ModalWnds/RunNowDlgWnd/img/rootWnd.png",
             "src/test/java/pages/NewInstaller/ModalWnds/RunNowDlgWnd/img/rootWnd1.png"}, similarity = 70.0f)
     private SikuliElement rootWnd;
 

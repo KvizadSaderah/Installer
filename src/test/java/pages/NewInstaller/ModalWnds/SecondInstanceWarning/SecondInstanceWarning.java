@@ -8,7 +8,7 @@ import org.sikuli.script.Screen;
 public class SecondInstanceWarning {
     Screen sikuli;
 
-    @FindBy(image = "src/test/java/pages/NewInstaller/ModalWnds/SecondInstanceWarning/img/firstStepWnd.png", similarity = 70.0f)
+    @FindBy(image = "src/test/java/pages/NewInstaller/ModalWnds/SecondInstanceWarning/img/rootWnd.png", similarity = 70.0f)
     private SikuliElement rootWnd;
 
     @FindBy(image = "src/test/java/pages/NewInstaller/ModalWnds/SecondInstanceWarning/img/okBtn.png", similarity = 70.0f)
